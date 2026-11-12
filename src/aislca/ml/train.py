@@ -5,9 +5,9 @@ from sklearn.linear_model import LinearRegression , LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.tree import DecisionTreeClassifier , DecisionTreeRegressor
 
-from aislca.data.features  import build_preprossesor
+from aislca.data.features  import build_preprocessor
 
-def get_regresssion_models(random_state :  int = 42) -> dict :
+def get_regression_models(random_state :  int = 42) -> dict :
     """Models that predict the final mark (0 to 20)."""
     return{
         "Baseline (mean)":DummyRegressor(strategy="mean"),
@@ -18,11 +18,22 @@ def get_regresssion_models(random_state :  int = 42) -> dict :
         ),
     }
 
+def get_classification_models(random_state: int = 42) -> dict:
+    """Models that predict pass (1) or fail (0)."""
+    return {
+        "Baseline (always pass)": DummyClassifier(strategy="most_frequent"),
+        "Logistic Regression": LogisticRegression(max_iter=1000),
+        "Decision Tree": DecisionTreeClassifier(max_depth=4, random_state=random_state),
+        "Random Forest": RandomForestClassifier(
+            n_estimators=200, min_samples_leaf=2, random_state=random_state
+        ),
+    }
+
 def build_pipelines(models:dict , X:pd.DataFrame)->dict:
     """Wrap each model with preprocessing (not trained yet)."""
 
     return {
-        name:Pipeline([("preprocess",build_preprossesor(X)),("model",models)])
+        name: Pipeline([("preprocess", build_preprocessor(X)), ("model", model)])
         for name, model in models.items()
     }
 
@@ -30,12 +41,12 @@ def build_pipelines(models:dict , X:pd.DataFrame)->dict:
 def train_models(models: dict , X_train:pd.DataFrame,y_train:pd.Series)->dict:
     """Train every model on the training data. Returns the fitted pipelines."""
 
-    pipelines  = build_preprossesor(models,X_train)
+    pipelines  = build_pipelines(models,X_train)
     for pipeline in pipelines.values():
         pipeline.fit(X_train,y_train)
-        return pipelines
+    return pipelines
 
-def feature_importance(pipeline,top_n: int = 10 ) -> pd.Series:
+def feature_importances(pipeline,top_n: int = 10 ) -> pd.Series:
     """Most important inputs for a tree-based pipeline (Random Forest / Decision Tree)."""
     names =  pipeline.named_steps["preprocess"].get_feature_names_out()
     importances = pipeline.named_steps["model"].feature_importances_

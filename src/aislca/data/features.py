@@ -36,7 +36,7 @@ def split_data(df:pd.DataFrame,pass_mark: int = 10, test_size:float =0.2,random_
     return train_df , test_df 
 
 
-def build_preprossesor(X:pd.DataFrame)-> ColumnTransformer:
+def build_preprocessor(X:pd.DataFrame)-> ColumnTransformer:
     """Scale numeric columns and one-hot encode text columns.
 
     Models only understand numbers, so 'yes'/'no' and 'GP'/'MS' become 0/1 columns.
@@ -47,7 +47,7 @@ def build_preprossesor(X:pd.DataFrame)-> ColumnTransformer:
     categorical_cols = X.select_dtypes(exclude="number").columns.to_list()
 
     return ColumnTransformer([
-        ('num',StandardScaler(),numeric_cols)
+        ('num',StandardScaler(),numeric_cols),
         ('cat',OneHotEncoder(handle_unknown="ignore" , sparse_output=False),categorical_cols
          ),
     ])

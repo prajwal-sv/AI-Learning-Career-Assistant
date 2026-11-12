@@ -30,7 +30,7 @@ cleaning:
     G2: [0, 20]
     G3: [0, 20]
 
-  ml:
+ml:
   test_size: 0.2
   random_state: 42     # fixed seed = same split every run
   cv_folds: 5
