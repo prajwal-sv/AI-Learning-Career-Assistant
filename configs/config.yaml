@@ -1,0 +1,8 @@
+# Why a config file: File names and settings live in one place instead of being scattered through code.
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  separator: ";"
+  raw_files:
+    mat: student-mat.csv
+    por: student-por.csv
