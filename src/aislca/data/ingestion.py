@@ -38,4 +38,13 @@ def load_student_data(subject : str = 'mat', config:dict = None) -> pd.DataFrame
 
 
 
-    
+def load_processed_data(subject: str = "mat", config: dict = None) -> pd.DataFrame:
+
+    """Load a cleaned dataset from data/processed/."""
+    config = config or load_config()
+    path = PROJECT_ROOT / config["data"]["processed_dir"] / f"student_{subject}_clean.csv"
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Cleaned data not found: {path}. Run: python -m aislca.data.cleaning"
+        )
+    return pd.read_csv(path)
