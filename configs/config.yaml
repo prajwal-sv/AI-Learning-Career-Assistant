@@ -34,3 +34,8 @@ ml:
   test_size: 0.2
   random_state: 42     # fixed seed = same split every run
   cv_folds: 5
+  
+clustering:
+  columns: [studytime, absences, failures, G1, G2]
+  n_clusters: 4
+  random_state: 42
