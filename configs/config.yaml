@@ -39,3 +39,11 @@ clustering:
   columns: [studytime, absences, failures, G1, G2]
   n_clusters: 4
   random_state: 42
+
+
+
+
+registry:
+  model_path: models/registry/student_model.joblib
+  metrics_path: models/registry/metrics.json
+  include_prior_grades: true   # true = Set A (uses G1, G2). false = Set B

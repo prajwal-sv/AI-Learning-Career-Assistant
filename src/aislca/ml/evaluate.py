@@ -1,9 +1,13 @@
-"""Metrics for comparing models."""
+import json
+from pathlib import Path
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from sklearn.metrics import (
     accuracy_score,
+    confusion_matrix,
     f1_score,
     mean_absolute_error,
     mean_squared_error,
@@ -12,6 +16,7 @@ from sklearn.metrics import (
     recall_score,
 )
 from sklearn.model_selection import KFold, StratifiedKFold, cross_val_score
+
 
 GRADE_MIN, GRADE_MAX = 0, 20
 
@@ -34,6 +39,24 @@ def classification_metrics(y_true , y_pred, pos_label : int = 1) -> dict:
         "f1": round(f1_score(y_true, y_pred, pos_label=pos_label, zero_division=0), 3),
     }
 
+def confusion_matrix_table(y_true, y_pred):
+    """Count the right and wrong predictions for the fail (0) and pass (1) groups."""
+    counts = confusion_matrix(y_true, y_pred, labels=[0, 1])
+    table = pd.DataFrame(
+        counts,
+        index=["Actually failed", "Actually passed"],
+        columns=["Predicted fail", "Predicted pass"],
+    )
+    return table
+
+def plot_confusion_matrix(y_true, y_pred):
+    """Draw the confusion matrix as a colored table."""
+    table = confusion_matrix_table(y_true, y_pred)
+    fig, ax = plt.subplots(figsize=(5, 4))
+    sns.heatmap(table, annot=True, fmt="d", cmap="Blues", cbar=False, ax=ax)
+    ax.set_title("Confusion matrix (test students)")
+    fig.tight_layout()
+    return fig
 
 def compare_models(fitted_models: dict, X_test, y_test, task: str, pos_label: int = 1):
     if task not in ("regression","classification"):
@@ -43,6 +66,7 @@ def compare_models(fitted_models: dict, X_test, y_test, task: str, pos_label: in
     for name, model in fitted_models.items():
         predictions = model.predict(X_test)
         if task == "regression":
+            # Marks can only be between 0 and 20
             predictions = np.clip(predictions, GRADE_MIN, GRADE_MAX)  # grades live in 0 to 20
             rows[name] = regression_metrics(y_test, predictions)
         else:
@@ -57,8 +81,12 @@ def compare_models(fitted_models: dict, X_test, y_test, task: str, pos_label: in
 
 
 def cross_validated_scores(pipelines: dict, X, y, task: str, cv_folds: int = 5,random_state: int = 42) -> pd.DataFrame:
-    """Average score over several train/validation splits (more stable than one split)."""
 
+    """Test each model on several different splits of the data.
+
+    Use new, untrained models here. Regression shows RMSE (lower is better),
+    classification shows F1 (higher is better).
+    """
     if task == "regression":
         cv = KFold(n_splits=cv_folds,shuffle=True,random_state=random_state)
         scoring, sign, label = "neg_root_mean_squared_error", -1, "rmse"
@@ -77,5 +105,23 @@ def cross_validated_scores(pipelines: dict, X, y, task: str, cv_folds: int = 5,r
     return pd.DataFrame(rows).T
 
 
+
+def pick_best_model(cv_table, task):
+    """Return the name of the best model in a cross_validated_scores table.
+
+    Baselines are ignored, because they are only there to compare against.
+    """
+    
+    real_models = cv_table[~cv_table.index.str.contains("Baseline")]
+    if task == "regression":
+        return real_models["rmse_mean"].idxmin()  # lowest error wins
+    return real_models["f1_mean"].idxmax()  # highest F1 wins
+
     
 
+def save_metrics_json(metrics, path):
+    """Save a dictionary of scores to a JSON file."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as file:
+        json.dump(metrics, file, indent=2)
