@@ -109,14 +109,15 @@ def cross_validated_scores(pipelines: dict, X, y, task: str, cv_folds: int = 5,r
 def pick_best_model(cv_table, task):
     """Return the name of the best model in a cross_validated_scores table.
 
+    The first column of the table holds the average score.
     Baselines are ignored, because they are only there to compare against.
     """
-    
     real_models = cv_table[~cv_table.index.str.contains("Baseline")]
-    if task == "regression":
-        return real_models["rmse_mean"].idxmin()  # lowest error wins
-    return real_models["f1_mean"].idxmax()  # highest F1 wins
+    average_scores = real_models.iloc[:, 0]  # first column = average score
 
+    if task == "regression":
+        return average_scores.idxmin()  # lowest error wins
+    return average_scores.idxmax()  # highest F1 wins
     
 
 def save_metrics_json(metrics, path):
