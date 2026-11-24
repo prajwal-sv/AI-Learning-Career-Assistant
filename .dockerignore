@@ -1,0 +1,19 @@
+# Never copy these into the image
+.venv/
+.git/
+.github/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.vscode/
+
+# Not needed to run the app
+notebooks/
+tests/
+docs/
+data/raw/
+
+# Secrets
+.env
+.env.*
