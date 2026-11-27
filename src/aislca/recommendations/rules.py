@@ -121,7 +121,7 @@ def subject_rules(marks, settings):
             recommendations.append(make_recommendation(
                 rule="moderate_mark",
                 area=subject,
-                priority="medium",
+                priority="low",
                 action=(f"Keep a steady routine in {subject}: one set of practice "
                         "exercises or one practice test each week, and review the "
                         "questions you got wrong."),
