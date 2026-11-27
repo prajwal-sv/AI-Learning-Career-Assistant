@@ -5,6 +5,7 @@ from sklearn.dummy import DummyClassifier, DummyRegressor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from xgboost import XGBClassifier, XGBRegressor
 
 from aislca.data.features import get_feature_columns, prepare_inputs, split_data
 from aislca.data.ingestion import PROJECT_ROOT, load_config, load_processed_data
@@ -19,6 +20,10 @@ def get_regression_models(random_state = 42) :
         "Random Forest" : RandomForestRegressor(
             n_estimators=200, min_samples_leaf=2,random_state=random_state
         ),
+        "XGBoost" : XGBRegressor(
+            n_estimators=200, max_depth=3, learning_rate=0.05,
+            random_state=random_state, n_jobs=1,
+        )
     }
     return models
 

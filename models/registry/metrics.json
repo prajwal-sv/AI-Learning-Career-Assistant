@@ -31,6 +31,10 @@
       "Random Forest": {
         "rmse_mean": 1.558,
         "rmse_std": 0.294
+      },
+      "XGBoost": {
+        "rmse_mean": 1.682,
+        "rmse_std": 0.295
       }
     }
   },
