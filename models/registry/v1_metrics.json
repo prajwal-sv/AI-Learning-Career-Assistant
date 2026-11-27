@@ -1,0 +1,97 @@
+{
+  "dataset": "UCI Student Performance (Math)",
+  "uses_prior_grades": true,
+  "train_students": 316,
+  "test_students": 79,
+  "regression": {
+    "best_model": "Random Forest",
+    "test_scores": {
+      "mae": 1.026,
+      "rmse": 1.571,
+      "r2": 0.877
+    },
+    "baseline_test_scores": {
+      "mae": 3.322,
+      "rmse": 4.482,
+      "r2": -0.0
+    },
+    "cross_validation": {
+      "Baseline (mean)": {
+        "rmse_mean": 4.578,
+        "rmse_std": 0.448
+      },
+      "Linear Regression": {
+        "rmse_mean": 2.052,
+        "rmse_std": 0.188
+      },
+      "Decision Tree": {
+        "rmse_mean": 1.905,
+        "rmse_std": 0.32
+      },
+      "Random Forest": {
+        "rmse_mean": 1.558,
+        "rmse_std": 0.294
+      }
+    }
+  },
+  "classification": {
+    "best_model": "Logistic Regression",
+    "test_scores_pass_group": {
+      "accuracy": 0.886,
+      "precision": 0.958,
+      "recall": 0.868,
+      "f1": 0.911
+    },
+    "test_scores_fail_group": {
+      "accuracy": 0.886,
+      "precision": 0.774,
+      "recall": 0.923,
+      "f1": 0.842
+    },
+    "baseline_test_scores": {
+      "accuracy": 0.671,
+      "precision": 0.671,
+      "recall": 1.0,
+      "f1": 0.803
+    },
+    "confusion_matrix": {
+      "rows": [
+        "Actually failed",
+        "Actually passed"
+      ],
+      "columns": [
+        "Predicted fail",
+        "Predicted pass"
+      ],
+      "counts": [
+        [
+          24,
+          2
+        ],
+        [
+          7,
+          46
+        ]
+      ]
+    },
+    "cross_validation": {
+      "Baseline (always pass)": {
+        "f1_mean": 0.803,
+        "f1_std": 0.004
+      },
+      "Logistic Regression": {
+        "f1_mean": 0.955,
+        "f1_std": 0.008
+      },
+      "Decision Tree": {
+        "f1_mean": 0.943,
+        "f1_std": 0.014
+      },
+      "Random Forest": {
+        "f1_mean": 0.943,
+        "f1_std": 0.014
+      }
+    }
+  },
+  "note": "Predictions are estimates, not guarantees."
+}
