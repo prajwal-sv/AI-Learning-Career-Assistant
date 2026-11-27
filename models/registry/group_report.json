@@ -1,0 +1,229 @@
+{
+  "dataset": "UCI Student Performance (Math)",
+  "students": 395,
+  "features": [
+    "studytime",
+    "absences",
+    "failures",
+    "G1",
+    "G2"
+  ],
+  "chosen_k": 5,
+  "silhouette_by_k": [
+    {
+      "k": 2,
+      "silhouette": 0.249,
+      "smallest_group": 188,
+      "inertia": 1430.8
+    },
+    {
+      "k": 3,
+      "silhouette": 0.251,
+      "smallest_group": 47,
+      "inertia": 1157.3
+    },
+    {
+      "k": 4,
+      "silhouette": 0.281,
+      "smallest_group": 42,
+      "inertia": 931.8
+    },
+    {
+      "k": 5,
+      "silhouette": 0.297,
+      "smallest_group": 31,
+      "inertia": 769.3
+    },
+    {
+      "k": 6,
+      "silhouette": 0.254,
+      "smallest_group": 31,
+      "inertia": 694.9
+    },
+    {
+      "k": 7,
+      "silhouette": 0.272,
+      "smallest_group": 31,
+      "inertia": 624.7
+    },
+    {
+      "k": 8,
+      "silhouette": 0.263,
+      "smallest_group": 29,
+      "inertia": 574.4
+    }
+  ],
+  "groups": [
+    {
+      "name": "Group A",
+      "group_number": 1,
+      "students": 115,
+      "share_percent": 29.1,
+      "description": "Compared with all students: weekly study time about average; absences about average; earlier class failures about average; first-period grades lower than average; second-period grades lower than average.",
+      "details": {
+        "studytime": {
+          "group_average": 1.83,
+          "all_students_average": 2.04,
+          "level": "about average"
+        },
+        "absences": {
+          "group_average": 2.58,
+          "all_students_average": 5.71,
+          "level": "about average"
+        },
+        "failures": {
+          "group_average": 0.17,
+          "all_students_average": 0.33,
+          "level": "about average"
+        },
+        "G1": {
+          "group_average": 8.25,
+          "all_students_average": 10.91,
+          "level": "lower than average"
+        },
+        "G2": {
+          "group_average": 7.93,
+          "all_students_average": 10.71,
+          "level": "lower than average"
+        }
+      }
+    },
+    {
+      "name": "Group B",
+      "group_number": 2,
+      "students": 107,
+      "share_percent": 27.1,
+      "description": "Compared with all students: weekly study time lower than average; absences about average; earlier class failures about average; first-period grades higher than average; second-period grades higher than average.",
+      "details": {
+        "studytime": {
+          "group_average": 1.6,
+          "all_students_average": 2.04,
+          "level": "lower than average"
+        },
+        "absences": {
+          "group_average": 2.88,
+          "all_students_average": 5.71,
+          "level": "about average"
+        },
+        "failures": {
+          "group_average": 0.07,
+          "all_students_average": 0.33,
+          "level": "about average"
+        },
+        "G1": {
+          "group_average": 13.88,
+          "all_students_average": 10.91,
+          "level": "higher than average"
+        },
+        "G2": {
+          "group_average": 13.98,
+          "all_students_average": 10.71,
+          "level": "higher than average"
+        }
+      }
+    },
+    {
+      "name": "Group C",
+      "group_number": 4,
+      "students": 78,
+      "share_percent": 19.7,
+      "description": "Compared with all students: weekly study time higher than average; absences about average; earlier class failures about average; first-period grades about average; second-period grades about average.",
+      "details": {
+        "studytime": {
+          "group_average": 3.35,
+          "all_students_average": 2.04,
+          "level": "higher than average"
+        },
+        "absences": {
+          "group_average": 3.96,
+          "all_students_average": 5.71,
+          "level": "about average"
+        },
+        "failures": {
+          "group_average": 0.06,
+          "all_students_average": 0.33,
+          "level": "about average"
+        },
+        "G1": {
+          "group_average": 12.53,
+          "all_students_average": 10.91,
+          "level": "about average"
+        },
+        "G2": {
+          "group_average": 12.55,
+          "all_students_average": 10.71,
+          "level": "about average"
+        }
+      }
+    },
+    {
+      "name": "Group D",
+      "group_number": 3,
+      "students": 64,
+      "share_percent": 16.2,
+      "description": "Compared with all students: weekly study time about average; absences higher than average; earlier class failures about average; first-period grades about average; second-period grades about average.",
+      "details": {
+        "studytime": {
+          "group_average": 1.75,
+          "all_students_average": 2.04,
+          "level": "about average"
+        },
+        "absences": {
+          "group_average": 18.39,
+          "all_students_average": 5.71,
+          "level": "higher than average"
+        },
+        "failures": {
+          "group_average": 0.34,
+          "all_students_average": 0.33,
+          "level": "about average"
+        },
+        "G1": {
+          "group_average": 10.55,
+          "all_students_average": 10.91,
+          "level": "about average"
+        },
+        "G2": {
+          "group_average": 10.06,
+          "all_students_average": 10.71,
+          "level": "about average"
+        }
+      }
+    },
+    {
+      "name": "Group E",
+      "group_number": 0,
+      "students": 31,
+      "share_percent": 7.8,
+      "description": "Compared with all students: weekly study time lower than average; absences about average; earlier class failures higher than average; first-period grades lower than average; second-period grades lower than average.",
+      "details": {
+        "studytime": {
+          "group_average": 1.58,
+          "all_students_average": 2.04,
+          "level": "lower than average"
+        },
+        "absences": {
+          "group_average": 5.29,
+          "all_students_average": 5.71,
+          "level": "about average"
+        },
+        "failures": {
+          "group_average": 2.52,
+          "all_students_average": 0.33,
+          "level": "higher than average"
+        },
+        "G1": {
+          "group_average": 7.19,
+          "all_students_average": 10.91,
+          "level": "lower than average"
+        },
+        "G2": {
+          "group_average": 6.48,
+          "all_students_average": 10.71,
+          "level": "lower than average"
+        }
+      }
+    }
+  ],
+  "note": "Groups describe patterns in this dataset. They are not labels of people, not a ranking, and not a prediction."
+}

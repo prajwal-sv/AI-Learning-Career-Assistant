@@ -71,3 +71,14 @@ recommendations:
   big_subject_gap: 3           # marks between best and weakest subject
   practice_sessions_per_week: 3
   practice_minutes: 30
+
+
+groups:
+  features: [studytime, absences, failures, G1, G2]   # G3 is never used
+  absences_cap: 20        # absences above this count as this value, so a few extreme students do not form their own group
+  k_min: 2
+  k_max: 8
+  min_group_share: 0.05   # every group must hold at least 5% of the students
+  description_gap: 0.5    # how far from the overall average (in standard deviations) counts as higher or lower
+  model_path: models/registry/group_model.joblib
+  report_path: models/registry/group_report.json
