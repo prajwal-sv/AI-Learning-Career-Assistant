@@ -56,3 +56,18 @@ registry:
   model_path: models/registry/student_model.joblib
   metrics_path: models/registry/metrics.json
   include_prior_grades: true   # true = Set A (uses G1, G2). false = Set B
+
+merge:
+  keys: [school, sex, age, address, famsize, Pstatus, Medu, Fedu, Mjob, Fjob, reason, nursery, internet]
+  output_file: student_merged_clean.csv
+
+recommendations:
+  weak_mark_below: 10          # 0-20 scale (the project document's "below 50 out of 100")
+  moderate_mark_below: 13      # from weak_mark_below up to here = moderate
+  strong_mark_from: 15         # this mark or higher = strong
+  low_study_time_code: 1       # 1 = less than 2 hours a week (or lower)
+  high_absences: 10            # this many absences or more in one subject
+  failures_flag_from: 1        # this many earlier class failures or more
+  big_subject_gap: 3           # marks between best and weakest subject
+  practice_sessions_per_week: 3
+  practice_minutes: 30
