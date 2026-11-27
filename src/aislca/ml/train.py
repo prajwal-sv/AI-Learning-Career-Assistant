@@ -36,6 +36,10 @@ def get_classification_models(random_state = 42) :
         "Random Forest": RandomForestClassifier(
             n_estimators=200, min_samples_leaf=2, random_state=random_state
         ),
+         "XGBoost": XGBClassifier(
+            n_estimators=200, max_depth=3, learning_rate=0.05,
+            random_state=random_state, n_jobs=1,
+        ),
     }
     return models
 

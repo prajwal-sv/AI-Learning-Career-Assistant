@@ -94,6 +94,10 @@
       "Random Forest": {
         "f1_mean": 0.943,
         "f1_std": 0.014
+      },
+      "XGBoost": {
+        "f1_mean": 0.955,
+        "f1_std": 0.009
       }
     }
   },
