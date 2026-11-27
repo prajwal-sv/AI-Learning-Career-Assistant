@@ -59,3 +59,24 @@ def predict_one(bundle, student):
     table = pd.DataFrame([student])
     results = predict_students(bundle, table)
     return results.iloc[0].to_dict()
+
+
+
+
+def fail_probability_one(bundle, student):
+    """The model's estimated chance (0 to 1) that one student does NOT reach the pass mark.
+
+    student is a dictionary like {'G1': 8, 'G2': 9}. Missing answers use typical values.
+    """
+    table = pd.DataFrame([student])
+
+    for column in bundle["feature_columns"]:
+        if column not in table.columns:
+            table[column] = bundle["defaults"][column]
+
+    inputs = prepare_inputs(table, bundle["feature_columns"], bundle["training_columns"])
+
+    model = bundle["classification_model"]
+    probabilities = model.predict_proba(inputs)[0]
+    fail_column = list(model.classes_).index(0)   # class 0 = fail
+    return float(probabilities[fail_column])
