@@ -1,10 +1,18 @@
 {
   "regression": {
     "model": "Random Forest",
-    "settings": {}
+    "settings": {
+      "n_estimators": 200,
+      "max_depth": null,
+      "min_samples_leaf": 2,
+      "max_features": 1.0
+    }
   },
   "classification": {
     "model": "Logistic Regression",
-    "settings": {}
-  }
+    "settings": {
+      "C": 1.0
+    }
+  },
+  "support_threshold": 0.5
 }

@@ -5,7 +5,12 @@
   "test_students": 79,
   "regression": {
     "best_model": "Random Forest",
-    "best_settings": {},
+    "best_settings": {
+      "n_estimators": 200,
+      "max_depth": null,
+      "min_samples_leaf": 2,
+      "max_features": 1.0
+    },
     "test_scores": {
       "mae": 1.026,
       "rmse": 1.571,
@@ -53,7 +58,9 @@
   },
   "classification": {
     "best_model": "Logistic Regression",
-    "best_settings": {},
+    "best_settings": {
+      "C": 1.0
+    },
     "test_scores_pass_group": {
       "accuracy": 0.886,
       "precision": 0.958,
@@ -128,6 +135,223 @@
       "Logistic Regression (tuned)": {
         "f1_mean": 0.95,
         "f1_std": 0.014
+      }
+    },
+    "support_analysis": {
+      "target_recall": 0.9,
+      "default_threshold": 0.5,
+      "chosen_threshold": 0.5,
+      "model_comparison_training": {
+        "Logistic Regression": {
+          "flagged": 105,
+          "caught": 95,
+          "missed": 9,
+          "false_alarms": 10,
+          "recall": 0.913,
+          "precision": 0.905,
+          "f1": 0.909,
+          "roc_auc": 0.982
+        },
+        "Decision Tree": {
+          "flagged": 108,
+          "caught": 94,
+          "missed": 10,
+          "false_alarms": 14,
+          "recall": 0.904,
+          "precision": 0.87,
+          "f1": 0.887,
+          "roc_auc": 0.958
+        },
+        "Random Forest": {
+          "flagged": 104,
+          "caught": 92,
+          "missed": 12,
+          "false_alarms": 12,
+          "recall": 0.885,
+          "precision": 0.885,
+          "f1": 0.885,
+          "roc_auc": 0.975
+        },
+        "XGBoost": {
+          "flagged": 107,
+          "caught": 96,
+          "missed": 8,
+          "false_alarms": 11,
+          "recall": 0.923,
+          "precision": 0.897,
+          "f1": 0.91,
+          "roc_auc": 0.978
+        }
+      },
+      "threshold_table_training": [
+        {
+          "threshold": 0.1,
+          "flagged": 134,
+          "caught": 102,
+          "missed": 2,
+          "false_alarms": 32,
+          "recall": 0.981,
+          "precision": 0.761,
+          "f1": 0.857
+        },
+        {
+          "threshold": 0.15,
+          "flagged": 130,
+          "caught": 101,
+          "missed": 3,
+          "false_alarms": 29,
+          "recall": 0.971,
+          "precision": 0.777,
+          "f1": 0.863
+        },
+        {
+          "threshold": 0.2,
+          "flagged": 121,
+          "caught": 100,
+          "missed": 4,
+          "false_alarms": 21,
+          "recall": 0.962,
+          "precision": 0.826,
+          "f1": 0.889
+        },
+        {
+          "threshold": 0.25,
+          "flagged": 118,
+          "caught": 99,
+          "missed": 5,
+          "false_alarms": 19,
+          "recall": 0.952,
+          "precision": 0.839,
+          "f1": 0.892
+        },
+        {
+          "threshold": 0.3,
+          "flagged": 115,
+          "caught": 98,
+          "missed": 6,
+          "false_alarms": 17,
+          "recall": 0.942,
+          "precision": 0.852,
+          "f1": 0.895
+        },
+        {
+          "threshold": 0.35,
+          "flagged": 113,
+          "caught": 97,
+          "missed": 7,
+          "false_alarms": 16,
+          "recall": 0.933,
+          "precision": 0.858,
+          "f1": 0.894
+        },
+        {
+          "threshold": 0.4,
+          "flagged": 109,
+          "caught": 96,
+          "missed": 8,
+          "false_alarms": 13,
+          "recall": 0.923,
+          "precision": 0.881,
+          "f1": 0.901
+        },
+        {
+          "threshold": 0.45,
+          "flagged": 108,
+          "caught": 96,
+          "missed": 8,
+          "false_alarms": 12,
+          "recall": 0.923,
+          "precision": 0.889,
+          "f1": 0.906
+        },
+        {
+          "threshold": 0.5,
+          "flagged": 105,
+          "caught": 95,
+          "missed": 9,
+          "false_alarms": 10,
+          "recall": 0.913,
+          "precision": 0.905,
+          "f1": 0.909
+        },
+        {
+          "threshold": 0.55,
+          "flagged": 101,
+          "caught": 92,
+          "missed": 12,
+          "false_alarms": 9,
+          "recall": 0.885,
+          "precision": 0.911,
+          "f1": 0.898
+        },
+        {
+          "threshold": 0.6,
+          "flagged": 100,
+          "caught": 91,
+          "missed": 13,
+          "false_alarms": 9,
+          "recall": 0.875,
+          "precision": 0.91,
+          "f1": 0.892
+        },
+        {
+          "threshold": 0.65,
+          "flagged": 96,
+          "caught": 89,
+          "missed": 15,
+          "false_alarms": 7,
+          "recall": 0.856,
+          "precision": 0.927,
+          "f1": 0.89
+        },
+        {
+          "threshold": 0.7,
+          "flagged": 90,
+          "caught": 84,
+          "missed": 20,
+          "false_alarms": 6,
+          "recall": 0.808,
+          "precision": 0.933,
+          "f1": 0.866
+        },
+        {
+          "threshold": 0.75,
+          "flagged": 89,
+          "caught": 83,
+          "missed": 21,
+          "false_alarms": 6,
+          "recall": 0.798,
+          "precision": 0.933,
+          "f1": 0.86
+        },
+        {
+          "threshold": 0.8,
+          "flagged": 85,
+          "caught": 80,
+          "missed": 24,
+          "false_alarms": 5,
+          "recall": 0.769,
+          "precision": 0.941,
+          "f1": 0.847
+        }
+      ],
+      "test_at_default_threshold": {
+        "flagged": 31,
+        "caught": 24,
+        "missed": 2,
+        "false_alarms": 7,
+        "recall": 0.923,
+        "precision": 0.774,
+        "f1": 0.842
+      },
+      "test_at_chosen_threshold": {
+        "flagged": 31,
+        "caught": 24,
+        "missed": 2,
+        "false_alarms": 7,
+        "recall": 0.923,
+        "precision": 0.774,
+        "f1": 0.842
       }
     }
   },

@@ -9,7 +9,7 @@ from xgboost import XGBClassifier, XGBRegressor
 
 from aislca.data.features import get_feature_columns, prepare_inputs, split_data
 from aislca.data.ingestion import PROJECT_ROOT, load_config, load_processed_data
-from aislca.ml import evaluate, tuning
+from aislca.ml import evaluate, support_eval, tuning
 
 
 def get_regression_models(random_state=42):
@@ -93,6 +93,9 @@ def run_final_training():
     inner_folds = tuning_config.get("inner_folds", 3)
     params_path = tuning_config.get("params_path", "models/registry/best_params.json")
 
+    # "Who may need support?" setting
+    target_recall = config.get("support", {}).get("target_recall", 0.90)
+
     # Step 1: load the cleaned data and split it into train and test students
     students = load_processed_data("mat", config)
     train_data, test_data = split_data(students, pass_mark, test_size, random_state)
@@ -134,15 +137,18 @@ def run_final_training():
 
     # Step 4: train the two winners on all the training students.
     # A tuned winner first searches for its best settings. We keep only the
-    # best model it found, and remember the settings.
+    # best model it found.
     regression_model = regression_models[best_regression_name]
     regression_model.fit(X_train, train_marks)
-    regression_model, regression_settings = tuning.split_fitted_model(regression_model)
+    regression_model = tuning.split_fitted_model(regression_model)[0]
+    regression_settings = tuning.final_settings(
+        regression_model, best_regression_name, "regression")
 
     classification_model = classification_models[best_classification_name]
     classification_model.fit(X_train, train_passed)
-    classification_model, classification_settings = tuning.split_fitted_model(
-        classification_model)
+    classification_model = tuning.split_fitted_model(classification_model)[0]
+    classification_settings = tuning.final_settings(
+        classification_model, best_classification_name, "classification")
 
     # Step 5: train the baselines too, so we can show the winners beat guessing
     baseline_regression = get_regression_models(random_state)["Baseline (mean)"]
@@ -156,6 +162,17 @@ def run_final_training():
     classification_predictions = classification_model.predict(X_test)
     baseline_passed = baseline_classification.predict(X_test)
     confusion = evaluate.confusion_matrix_table(test_passed, classification_predictions)
+
+    # Step 6b: "who may need support?" analysis.
+    # The threshold is chosen with the TRAINING students only, then the test
+    # students are scored once at 0.5 and once at the chosen threshold.
+    support_analysis = support_eval.analyse_support(
+        final_model=classification_model,
+        candidate_models=get_classification_models(random_state),
+        X_train=X_train, y_train=train_passed,
+        X_test=X_test, y_test=test_passed,
+        target_recall=target_recall,
+        cv_folds=cv_folds, random_state=random_state)
 
     metrics = {
         "dataset": "UCI Student Performance (Math)",
@@ -184,6 +201,7 @@ def run_final_training():
                 "counts": confusion.values.tolist(),
             },
             "cross_validation": classification_cv.to_dict(orient="index"),
+            "support_analysis": support_analysis,
         },
         "note": "Predictions are estimates, not guarantees.",
     }
@@ -199,6 +217,7 @@ def run_final_training():
         "regression_model": regression_model,
         "classification_model_name": best_classification_name,
         "classification_model": classification_model,
+        "support_threshold": support_analysis["chosen_threshold"],
     }
 
     model_path = PROJECT_ROOT / config["registry"]["model_path"]
@@ -208,17 +227,18 @@ def run_final_training():
     metrics_path = PROJECT_ROOT / config["registry"]["metrics_path"]
     evaluate.save_metrics_json(metrics, metrics_path)
 
-    # Save the best settings in a small file of their own.
-    # An empty settings dictionary means an untuned model with its V1 settings.
+    # Save the final settings in a small file of their own
     best_settings = {
         "regression": {"model": best_regression_name, "settings": regression_settings},
         "classification": {"model": best_classification_name, "settings": classification_settings},
+        "support_threshold": support_analysis["chosen_threshold"],
     }
     settings_path = PROJECT_ROOT / params_path
     evaluate.save_metrics_json(best_settings, settings_path)
 
     print("Best mark model:     ", best_regression_name)
     print("Best pass/fail model:", best_classification_name)
+    print("Support threshold:   ", support_analysis["chosen_threshold"])
     print("Model saved to:      ", model_path)
     print("Metrics saved to:    ", metrics_path)
     print("Settings saved to:   ", settings_path)

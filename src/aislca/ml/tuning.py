@@ -103,3 +103,20 @@ def split_fitted_model(model):
     if hasattr(model, "best_estimator_"):
         return model.best_estimator_, clean_params(model.best_params_)
     return model, {}
+
+
+def final_settings(model, name, task):
+    """The values of the tunable settings for the model that was chosen.
+
+    Works for tuned and untuned models. A value of None means "library default".
+    """
+    base_name = name.replace(" (tuned)", "")
+    grids = get_search_grids(task)
+    if base_name not in grids:
+        return {}
+
+    all_params = model.get_params()
+    settings = {}
+    for key in grids[base_name]:
+        settings[key] = all_params[key]
+    return clean_params(settings)
