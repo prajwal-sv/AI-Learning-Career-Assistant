@@ -5,6 +5,7 @@
   "test_students": 79,
   "regression": {
     "best_model": "Random Forest",
+    "best_settings": {},
     "test_scores": {
       "mae": 1.026,
       "rmse": 1.571,
@@ -35,11 +36,24 @@
       "XGBoost": {
         "rmse_mean": 1.682,
         "rmse_std": 0.295
+      },
+      "Decision Tree (tuned)": {
+        "rmse_mean": 1.947,
+        "rmse_std": 0.175
+      },
+      "Random Forest (tuned)": {
+        "rmse_mean": 1.558,
+        "rmse_std": 0.225
+      },
+      "XGBoost (tuned)": {
+        "rmse_mean": 1.718,
+        "rmse_std": 0.349
       }
     }
   },
   "classification": {
     "best_model": "Logistic Regression",
+    "best_settings": {},
     "test_scores_pass_group": {
       "accuracy": 0.886,
       "precision": 0.958,
@@ -98,6 +112,22 @@
       "XGBoost": {
         "f1_mean": 0.955,
         "f1_std": 0.009
+      },
+      "Decision Tree (tuned)": {
+        "f1_mean": 0.947,
+        "f1_std": 0.017
+      },
+      "Random Forest (tuned)": {
+        "f1_mean": 0.945,
+        "f1_std": 0.016
+      },
+      "XGBoost (tuned)": {
+        "f1_mean": 0.953,
+        "f1_std": 0.017
+      },
+      "Logistic Regression (tuned)": {
+        "f1_mean": 0.95,
+        "f1_std": 0.014
       }
     }
   },

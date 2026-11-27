@@ -45,7 +45,11 @@ clustering:
   n_clusters: 4
   random_state: 42
 
-
+tuning:
+  enabled: true          # false = run exactly like V1 (no tuning)
+  n_iter: 15             # random combinations tried per model
+  inner_folds: 3         # folds used inside the search
+  params_path: models/registry/best_params.json
 
 
 registry:

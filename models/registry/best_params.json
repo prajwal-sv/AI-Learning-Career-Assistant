@@ -1,0 +1,10 @@
+{
+  "regression": {
+    "model": "Random Forest",
+    "settings": {}
+  },
+  "classification": {
+    "model": "Logistic Regression",
+    "settings": {}
+  }
+}
